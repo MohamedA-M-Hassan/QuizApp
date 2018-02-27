@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if(score == questions.length)
-        {score = 0;}
-
-
-
         // connect Buttons to my variables
         trueButton =(Button) findViewById(R.id.trueButton);
         falseButton =(Button) findViewById(R.id.falseButton);
@@ -99,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!questions[index].ismAnswer()){
                     score++;
                     mProgressBar.incrementProgressBy(8);
-                    scoreView.setText("Score is " + score + " /3");
+                    scoreView.setText("Score is " + score + " /"+questions.length);
                 }
                 updateQuestion();
             }
@@ -109,8 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateQuestion()
     {
-        index = (index + 1) % questions.length;
-        questionView.setText(questions[index].getmQuestionId());
+        if(index  == (questions.length-1))
+        {
+            // View the score when you finish all question
+            questionView.setText("Score is " + score + " /"+questions.length);
+            index = 0 ;
+            score = 0;
+        }
+        else
+        {
+            index = (index + 1) % questions.length;
+            questionView.setText(questions[index].getmQuestionId());
+        }
+
     }
 
     // what we need to save it's state when make Rotate
